@@ -1,0 +1,31 @@
+- name: Tarefas para servidores Linux
+  hosts: linux
+  become: true
+  tasks:
+    - name: Mostrar hostname do Linux
+      command: hostname
+      register: resultado_hostname_linux
+
+    - name: Exibir hostname
+      debug:
+        var: resultado_hostname_linux.stdout
+
+    - name: Verificar se o usuário "aluno" existe
+      command: id aluno
+      register: resultado_usuario_linux
+      ignore_errors: yes
+
+    - name: Mostrar resultado da verificação do usuário
+      debug:
+        var: resultado_usuario_linux.stdout
+
+- name: Tarefas para servidores Windows
+  hosts: windows
+  tasks:
+    - name: Mostrar hostname do Windows
+      win_command: hostname
+      register: resultado_hostname_windows
+
+    - name: Exibir hostname
+      debug:
+        var: resultado_hostname_windows.stdout
